@@ -14,6 +14,10 @@ net.createServer(function(socket) {
 	socket.username = 'User ' + Date.now();
 	sockets.push(socket);
 
+	sockets.forEach(function (sock) {
+		sock.write( sock.username + ' connected from server\n');
+	});
+
 	socket.on('close', function (socket) {
 		sockets.splice(sockets.indexOf(socket), 1);
 		sockets.forEach(function (sock) {
