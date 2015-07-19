@@ -26,6 +26,22 @@ net.createServer(function(socket) {
 
 		sockets.forEach(function(sock) {
 			sock.write(self.username + '> ' + data);
+
+			var text = data.toString().split( ' ' );
+
+			if ( text[ 0 ] === '\/rename' ) {
+				text.shift();
+
+				// remove \r\n on last element of string
+				text[ text.length - 1 ] = text[ text.length - 1 ].replace( '\r\n', '' );
+				text = text.toString().replace( ',', ' ' );
+
+				var prevUsername = self.username;
+				self.username = text;
+
+				sock.write( prevUsername + ' changed username to : ' + self.username + '\n' );
+			}
+
 		});
 	});
 
